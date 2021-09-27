@@ -42,8 +42,9 @@ mixin _$FeedStore on _FeedStoreBase, Store {
   final _$getProductsAsyncAction = AsyncAction('_FeedStoreBase.getProducts');
 
   @override
-  Future getProducts() {
-    return _$getProductsAsyncAction.run(() => super.getProducts());
+  Future getProducts({String? search}) {
+    return _$getProductsAsyncAction
+        .run(() => super.getProducts(search: search));
   }
 
   final _$_FeedStoreBaseActionController =

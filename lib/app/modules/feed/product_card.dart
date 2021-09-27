@@ -58,10 +58,10 @@ class ProductCard extends StatelessWidget {
                           Text(
                             product.description ?? '',
                             style: TextStyle(
-                              fontSize: 10.sp,
+                              fontSize: 9.sp,
                             ),
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
+                            maxLines: 1,
                           ),
                           Text(
                             'R\$ ' +

@@ -6,16 +6,61 @@ import 'package:sizer/sizer.dart';
 import 'feed_store.dart';
 
 class FeedAppBar extends StatelessWidget {
-  const FeedAppBar({
+  FeedAppBar({
     Key? key,
-    required this.store,
   }) : super(key: key);
 
-  final FeedStore store;
+  final FeedStore store = Modular.get();
+
+  OutlineInputBorder get inputEnabledBorder {
+    return OutlineInputBorder(
+      borderRadius: inputBorderRadius,
+      borderSide: const BorderSide(color: Colors.black, width: .5),
+    );
+  }
+
+  OutlineInputBorder get inputBorder {
+    return OutlineInputBorder(
+      borderRadius: inputBorderRadius,
+      borderSide: const BorderSide(color: Colors.transparent),
+    );
+  }
+
+  BorderRadius get inputBorderRadius {
+    return const BorderRadius.all(
+      Radius.circular(20),
+    );
+  }
+
+  OutlineInputBorder get inputFocusedBorder {
+    return OutlineInputBorder(
+      borderRadius: inputBorderRadius,
+      borderSide: const BorderSide(color: Colors.red),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            child: TextFormField(
+              onChanged: (v) => store.getProducts(search: v),
+              decoration: InputDecoration(
+                isDense: true,
+                border: inputBorder,
+                enabledBorder: inputEnabledBorder,
+                focusedBorder: inputFocusedBorder,
+                filled: true,
+                label: const Text('Pesquisa'),
+              ),
+            ),
+          ),
+        ),
+      ),
       centerTitle: false,
       title: Text.rich(
         const TextSpan(text: 'Conceitual ', children: [

@@ -16,9 +16,13 @@ abstract class _CartStoreBase with Store {
   @action
   getTotalPrice() {
     double priceHelper = 0;
-    store.shoppingCart.forEach((e) {
-      priceHelper += e.price!;
-      totalPrice = priceHelper;
-    });
+    if (store.shoppingCart.isNotEmpty) {
+      store.shoppingCart.forEach((e) {
+        priceHelper += e.price!;
+        totalPrice = priceHelper;
+      });
+    } else {
+      totalPrice = 0;
+    }
   }
 }

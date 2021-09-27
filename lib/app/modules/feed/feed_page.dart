@@ -34,8 +34,8 @@ class FeedPageState extends ModularState<FeedPage, FeedStore> {
     const landscape = Orientation.landscape;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: FeedAppBar(store: store),
+        preferredSize: const Size.fromHeight(112),
+        child: FeedAppBar(),
       ),
       body: Container(
         constraints: BoxConstraints(minHeight: 100.h, minWidth: 100.w),
@@ -51,7 +51,7 @@ class FeedPageState extends ModularState<FeedPage, FeedStore> {
                     crossAxisCount:
                         MediaQuery.of(context).orientation == portrait ? 1 : 2,
                     staggeredTileBuilder: (int index) =>
-                        const StaggeredTile.fit(2),
+                        const StaggeredTile.fit(1),
                     itemBuilder: (BuildContext context, int i) {
                       final product = store.products[i];
 

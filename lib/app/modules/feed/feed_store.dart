@@ -13,9 +13,18 @@ abstract class _FeedStoreBase with Store {
   @observable
   ObservableList<ProductModel> products = <ProductModel>[].asObservable();
   @action
-  getProducts() async {
+  getProducts({String? search}) async {
     var list = await repo.getProducts();
-    products = list.asObservable();
+    if (search != null && search != '') {
+      products.clear();
+      for (var e in list) {
+        if (e.title!.toLowerCase().contains(search.toLowerCase())) {
+          products.add(e);
+        }
+      }
+    } else {
+      products = list.asObservable();
+    }
   }
 
   @observable
