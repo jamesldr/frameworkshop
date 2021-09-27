@@ -6,6 +6,7 @@ class Repository {
   Future<List<ProductModel>> getProducts() async {
     return await [
       ProductModel(
+        id: 1,
         title: 'Maçã',
         description: '1 kg de Maça fresca',
         price: 3.00,
@@ -13,6 +14,7 @@ class Repository {
             'http://www.falarempublico.com.br/wp-content/uploads/2014/04/maca.jpg',
       ),
       ProductModel(
+        id: 2,
         title: 'Pêra',
         description: '1 kg de Pêra',
         price: 1.50,
@@ -20,6 +22,7 @@ class Repository {
             'https://ibassets.com.br/ib.item.image.big/b-f9218a950b06450b86e8e341db55bd0d.jpeg',
       ),
       ProductModel(
+        id: 3,
         title: 'Banana',
         description: '1 kg de Banana',
         price: 1.0,
@@ -27,6 +30,7 @@ class Repository {
             'https://cdn.awsli.com.br/1000x1000/1304/1304561/produto/52600382/b77ef17dfc.jpg',
       ),
       ProductModel(
+        id: 4,
         title: 'Abacaxi',
         description: '1 uniade de Abacaxi',
         price: 5.50,
@@ -34,6 +38,7 @@ class Repository {
             'https://www.infoescola.com/wp-content/uploads/2010/01/abacaxi-745437190.jpg',
       ),
       ProductModel(
+        id: 5,
         title: 'Manga',
         description: '1 unidade de Manga',
         price: 3.50,

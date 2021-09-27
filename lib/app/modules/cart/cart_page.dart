@@ -81,6 +81,21 @@ class CartPageState extends State<CartPage> {
                     return Dismissible(
                       key: Key('$i' + uniqueProduct.toJson().toString()),
                       direction: DismissDirection.startToEnd,
+                      background: Container(
+                        color: Colors.red,
+                        child: Row(
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: Icon(
+                                Icons.delete,
+                                size: 36,
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                       confirmDismiss: (direction) async {
                         var result = false;
                         await showDialog(

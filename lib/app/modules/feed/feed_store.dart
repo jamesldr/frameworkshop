@@ -29,8 +29,7 @@ abstract class _FeedStoreBase with Store {
 
   @observable
   ObservableList<ProductModel> shoppingCart = <ProductModel>[].asObservable();
-  @action
-  setShoppingCart(ObservableList<ProductModel> value) => shoppingCart = value;
+
   @action
   shoppingCartAddItem(ProductModel value) => shoppingCart.add(value);
   @action

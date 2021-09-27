@@ -51,17 +51,6 @@ mixin _$FeedStore on _FeedStoreBase, Store {
       ActionController(name: '_FeedStoreBase');
 
   @override
-  dynamic setShoppingCart(ObservableList<ProductModel> value) {
-    final _$actionInfo = _$_FeedStoreBaseActionController.startAction(
-        name: '_FeedStoreBase.setShoppingCart');
-    try {
-      return super.setShoppingCart(value);
-    } finally {
-      _$_FeedStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic shoppingCartAddItem(ProductModel value) {
     final _$actionInfo = _$_FeedStoreBaseActionController.startAction(
         name: '_FeedStoreBase.shoppingCartAddItem');
