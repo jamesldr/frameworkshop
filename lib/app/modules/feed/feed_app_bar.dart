@@ -13,29 +13,20 @@ class FeedAppBar extends StatelessWidget {
   final FeedStore store = Modular.get();
 
   OutlineInputBorder get inputEnabledBorder {
-    return OutlineInputBorder(
-      borderRadius: inputBorderRadius,
-      borderSide: const BorderSide(color: Colors.black, width: .5),
+    return const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black, width: .5),
     );
   }
 
   OutlineInputBorder get inputBorder {
-    return OutlineInputBorder(
-      borderRadius: inputBorderRadius,
-      borderSide: const BorderSide(color: Colors.transparent),
-    );
-  }
-
-  BorderRadius get inputBorderRadius {
-    return const BorderRadius.all(
-      Radius.circular(20),
+    return const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.transparent),
     );
   }
 
   OutlineInputBorder get inputFocusedBorder {
-    return OutlineInputBorder(
-      borderRadius: inputBorderRadius,
-      borderSide: const BorderSide(color: Colors.red),
+    return const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.red),
     );
   }
 
@@ -49,13 +40,17 @@ class FeedAppBar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             child: TextFormField(
               onChanged: (v) => store.getProducts(search: v),
+              onFieldSubmitted: (v) => store.getProducts(search: v),
               decoration: InputDecoration(
+                // prefixIcon: const Icon(Icons.search),
+                suffixIcon: const Icon(Icons.search),
                 isDense: true,
                 border: inputBorder,
                 enabledBorder: inputEnabledBorder,
                 focusedBorder: inputFocusedBorder,
                 filled: true,
-                label: const Text('Pesquisa'),
+                // label: const Text('Pesquisa'),
+                hintText: 'Pesquisa',
               ),
             ),
           ),

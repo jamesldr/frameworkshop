@@ -38,7 +38,9 @@ class CartPageState extends State<CartPage> {
     return Scaffold(
       floatingActionButton: Observer(builder: (_) {
         return FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            Modular.to.pushNamed('/checkout');
+          },
           icon: const Icon(Icons.shopping_cart),
           label: Column(
             children: [
