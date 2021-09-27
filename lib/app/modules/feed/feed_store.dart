@@ -16,6 +16,7 @@ abstract class _FeedStoreBase with Store {
   getProducts({String? search}) async {
     var list = await repo.getProducts();
     if (search != null && search != '') {
+      onLoading();
       products.clear();
       for (var e in list) {
         if (e.title!.toLowerCase().contains(search.toLowerCase())) {
@@ -39,4 +40,26 @@ abstract class _FeedStoreBase with Store {
       shoppingCart.removeWhere((model) => value == model);
   @action
   shoppingCartClear() => shoppingCart.clear();
+
+  @observable
+  String loadingMsg = 'Carregando lista de produtos';
+
+  Future<Null>? future;
+
+  bool isLoadingBusy = false;
+  @action
+  onLoading() {
+    if (isLoadingBusy) return;
+    isLoadingBusy = true;
+    loadingMsg = 'Carregando lista de produtos';
+
+    future = Future.microtask(() async {
+      Future.delayed(const Duration(seconds: 5)).then((value) {
+        loadingMsg = 'Nenhum resultado encontrado';
+        future = null;
+        isLoadingBusy = false;
+      });
+    });
+    return;
+  }
 }

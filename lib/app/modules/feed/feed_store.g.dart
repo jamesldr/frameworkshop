@@ -39,6 +39,21 @@ mixin _$FeedStore on _FeedStoreBase, Store {
     });
   }
 
+  final _$loadingMsgAtom = Atom(name: '_FeedStoreBase.loadingMsg');
+
+  @override
+  String get loadingMsg {
+    _$loadingMsgAtom.reportRead();
+    return super.loadingMsg;
+  }
+
+  @override
+  set loadingMsg(String value) {
+    _$loadingMsgAtom.reportWrite(value, super.loadingMsg, () {
+      super.loadingMsg = value;
+    });
+  }
+
   final _$getProductsAsyncAction = AsyncAction('_FeedStoreBase.getProducts');
 
   @override
@@ -95,10 +110,22 @@ mixin _$FeedStore on _FeedStoreBase, Store {
   }
 
   @override
+  dynamic onLoading() {
+    final _$actionInfo = _$_FeedStoreBaseActionController.startAction(
+        name: '_FeedStoreBase.onLoading');
+    try {
+      return super.onLoading();
+    } finally {
+      _$_FeedStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 products: ${products},
-shoppingCart: ${shoppingCart}
+shoppingCart: ${shoppingCart},
+loadingMsg: ${loadingMsg}
     ''';
   }
 }

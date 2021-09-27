@@ -45,7 +45,7 @@ class FeedPageState extends ModularState<FeedPage, FeedStore> {
 
             // });
             return store.products.isEmpty
-                ? const WaitingProductsWidget()
+                ? WaitingProductsWidget()
                 : StaggeredGridView.countBuilder(
                     itemCount: store.products.length,
                     crossAxisCount:
