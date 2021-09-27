@@ -24,15 +24,30 @@ mixin _$CartStore on _CartStoreBase, Store {
     });
   }
 
+  final _$totalPriceListAtom = Atom(name: '_CartStoreBase.totalPriceList');
+
+  @override
+  List<double> get totalPriceList {
+    _$totalPriceListAtom.reportRead();
+    return super.totalPriceList;
+  }
+
+  @override
+  set totalPriceList(List<double> value) {
+    _$totalPriceListAtom.reportWrite(value, super.totalPriceList, () {
+      super.totalPriceList = value;
+    });
+  }
+
   final _$_CartStoreBaseActionController =
       ActionController(name: '_CartStoreBase');
 
   @override
-  dynamic setTotalPrice(double value) {
+  dynamic getTotalPrice() {
     final _$actionInfo = _$_CartStoreBaseActionController.startAction(
-        name: '_CartStoreBase.setTotalPrice');
+        name: '_CartStoreBase.getTotalPrice');
     try {
-      return super.setTotalPrice(value);
+      return super.getTotalPrice();
     } finally {
       _$_CartStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +56,8 @@ mixin _$CartStore on _CartStoreBase, Store {
   @override
   String toString() {
     return '''
-totalPrice: ${totalPrice}
+totalPrice: ${totalPrice},
+totalPriceList: ${totalPriceList}
     ''';
   }
 }

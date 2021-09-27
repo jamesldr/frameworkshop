@@ -6,9 +6,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-import 'cart_store.dart';
+import 'package:frameworkshop/shared/models/product_model.dart';
+
 import '../feed/feed_store.dart';
 import '../feed/product_card.dart';
+import 'cart_store.dart';
+import 'product_cart_item_price.dart';
 
 class CartPage extends StatefulWidget {
   final String title;
@@ -27,11 +30,26 @@ class CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        icon: const Icon(Icons.shopping_cart),
-        label: const Text('Finalizar compra'),
-      ),
+      floatingActionButton: Observer(builder: (_) {
+        return FloatingActionButton.extended(
+          onPressed: () {},
+          icon: const Icon(Icons.shopping_cart),
+          label: Column(
+            children: [
+              Text(
+                'R\$ ' +
+                    formatCurrency
+                        .format(store.totalPrice)
+                        .replaceAll(',', '')
+                        .replaceAll('.', ',')
+                        .replaceAll('\$', ''),
+                style: TextStyle(fontSize: 12.sp),
+              ),
+              const Text('Finalizar compra'),
+            ],
+          ),
+        );
+      }),
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -48,8 +66,10 @@ class CartPageState extends State<CartPage> {
                     var uniqueProduct =
                         feedStore.shoppingCart.toSet().toList()[i];
                     var amount = 0;
-                    feedStore.shoppingCart
-                        .forEach((v) => v == uniqueProduct ? amount++ : null);
+                    for (var v in feedStore.shoppingCart) {
+                      v == uniqueProduct ? amount++ : null;
+                    }
+
                     return Dismissible(
                       key: Key('$i' + uniqueProduct.toJson().toString()),
                       direction: DismissDirection.startToEnd,
@@ -95,10 +115,7 @@ class CartPageState extends State<CartPage> {
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
                             children: [
-                              SizedBox(
-                                width: 40.sp,
-                                child: ProductImage(product: uniqueProduct),
-                              ),
+                              ProductCartImage(uniqueProduct: uniqueProduct),
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: SizedBox(
@@ -121,91 +138,19 @@ class CartPageState extends State<CartPage> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.grey.withOpacity(0.5)),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      InkWell(
-                                        onTap: () => feedStore
-                                            .shoppingCartAddItem(uniqueProduct),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            color: Colors.red,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(4.0),
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        'x$amount',
-                                        style: TextStyle(fontSize: 12.sp),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      InkWell(
-                                        onTap: () =>
-                                            feedStore.shoppingCartRemoveItem(
-                                                uniqueProduct),
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            color: Colors.red,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(4.0),
-                                            child: Icon(
-                                              Icons.remove,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              Expanded(
+                                child: ProductCartItemPrice(
+                                  index: i,
+                                  formatCurrency: formatCurrency,
+                                  uniqueProduct: uniqueProduct,
+                                  amount: amount,
                                 ),
                               ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    const Text(
-                                      'PREÇO',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      'R\$ ' +
-                                          formatCurrency
-                                              .format(
-                                                  uniqueProduct.price! * amount)
-                                              .replaceAll(',', '')
-                                              .replaceAll('.', ',')
-                                              .replaceAll('\$', ''),
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 3,
-                                      textAlign: TextAlign.start,
-                                    )
-                                  ],
-                                ),
-                              )
+                              ProductCartAddRemoveItemButtons(
+                                feedStore: feedStore,
+                                uniqueProduct: uniqueProduct,
+                                amount: amount,
+                              ),
                             ],
                           ),
                         ),
@@ -219,6 +164,97 @@ class CartPageState extends State<CartPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ProductCartAddRemoveItemButtons extends StatelessWidget {
+  ProductCartAddRemoveItemButtons({
+    Key? key,
+    required this.feedStore,
+    required this.uniqueProduct,
+    required this.amount,
+  }) : super(key: key);
+
+  final FeedStore feedStore;
+  final ProductModel uniqueProduct;
+  final int amount;
+  final CartStore store = Modular.get();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.withOpacity(0.5)),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: () {
+                feedStore.shoppingCartAddItem(uniqueProduct);
+                store.getTotalPrice();
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'x$amount',
+              style: TextStyle(fontSize: 12.sp),
+            ),
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                feedStore.shoppingCartRemoveItem(uniqueProduct);
+                store.getTotalPrice();
+              },
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.remove,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProductCartImage extends StatelessWidget {
+  const ProductCartImage({
+    Key? key,
+    required this.uniqueProduct,
+  }) : super(key: key);
+
+  final ProductModel uniqueProduct;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 40.sp,
+      child: ProductImage(product: uniqueProduct),
     );
   }
 }
