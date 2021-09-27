@@ -5,8 +5,9 @@ class RatingsModel {
   RatingsModel({this.rate, this.count});
 
   RatingsModel.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
-    count = json['count'];
+    rate =
+        json['rate'] is int ? (json['rate'] as int).toDouble() : json['rate'];
+    count = json['count'] is int ? json['count'] : int.tryParse(json['count']);
   }
 
   Map<String, dynamic> toJson() {

@@ -9,7 +9,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.isLoading = false,
   }) : super(key: key);
 
-  final Function() onPressed;
+  final Function()? onPressed;
   final String text;
   final bool isLoading;
 
@@ -22,12 +22,15 @@ class CustomElevatedButton extends StatelessWidget {
         height: 32.sp,
         child: ElevatedButton(
           onPressed: onPressed,
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)))),
           child: Padding(
             padding: EdgeInsets.all(5.sp),
             child: isLoading
-                ? const CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 8,
+                ? const CircularProgressIndicator.adaptive(
+                    backgroundColor: Colors.white,
+                    strokeWidth: 2,
                   )
                 : Text(
                     text,

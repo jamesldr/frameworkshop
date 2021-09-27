@@ -28,9 +28,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
             minWidth: 100.w,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(),
               const LogoWidget(),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),

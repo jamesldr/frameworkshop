@@ -22,7 +22,7 @@ class LogoWidget extends StatelessWidget {
         Text.rich(
           TextSpan(text: 'Conceitual ', children: [
             TextSpan(text: 'S', style: TextStyle(color: accentColor)),
-            TextSpan(text: 'hop'),
+            const TextSpan(text: 'hop'),
           ]),
           style: TextStyle(fontSize: size.sp, fontWeight: FontWeight.bold),
         ),

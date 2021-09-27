@@ -12,6 +12,7 @@ class AppWidget extends StatelessWidget {
       builder: (BuildContext context, Orientation orientation,
               DeviceType deviceType) =>
           MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Shop Conceito',
         theme: ThemeData(
           primarySwatch: Colors.red,

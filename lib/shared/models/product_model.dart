@@ -21,7 +21,9 @@ class ProductModel {
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
+    price = json['price'] is double
+        ? json['price']
+        : (json['price'] as int).toDouble();
     description = json['description'];
     category = json['category'];
     image = json['image'];

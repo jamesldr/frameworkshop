@@ -39,6 +39,36 @@ mixin _$LoginStore on _LoginStoreBase, Store {
     });
   }
 
+  final _$pwVisibileAtom = Atom(name: '_LoginStoreBase.pwVisibile');
+
+  @override
+  bool get pwVisibile {
+    _$pwVisibileAtom.reportRead();
+    return super.pwVisibile;
+  }
+
+  @override
+  set pwVisibile(bool value) {
+    _$pwVisibileAtom.reportWrite(value, super.pwVisibile, () {
+      super.pwVisibile = value;
+    });
+  }
+
+  final _$isBusyAtom = Atom(name: '_LoginStoreBase.isBusy');
+
+  @override
+  bool get isBusy {
+    _$isBusyAtom.reportRead();
+    return super.isBusy;
+  }
+
+  @override
+  set isBusy(bool value) {
+    _$isBusyAtom.reportWrite(value, super.isBusy, () {
+      super.isBusy = value;
+    });
+  }
+
   final _$_LoginStoreBaseActionController =
       ActionController(name: '_LoginStoreBase');
 
@@ -65,10 +95,45 @@ mixin _$LoginStore on _LoginStoreBase, Store {
   }
 
   @override
+  dynamic togglePwVisibile() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.togglePwVisibile');
+    try {
+      return super.togglePwVisibile();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic toggleBusy() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.toggleBusy');
+    try {
+      return super.toggleBusy();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic onLogin() {
+    final _$actionInfo = _$_LoginStoreBaseActionController.startAction(
+        name: '_LoginStoreBase.onLogin');
+    try {
+      return super.onLogin();
+    } finally {
+      _$_LoginStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 user: ${user},
-password: ${password}
+password: ${password},
+pwVisibile: ${pwVisibile},
+isBusy: ${isBusy}
     ''';
   }
 }

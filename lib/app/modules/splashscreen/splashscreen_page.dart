@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class SplashscreenPage extends StatefulWidget {
   final String title;
-  const SplashscreenPage({Key? key, this.title = 'SplashscreenPage'}) : super(key: key);
+  const SplashscreenPage({Key? key, this.title = 'SplashscreenPage'})
+      : super(key: key);
   @override
   SplashscreenPageState createState() => SplashscreenPageState();
 }
+
 class SplashscreenPageState extends State<SplashscreenPage> {
   final SplashscreenStore store = Modular.get();
 
@@ -18,7 +20,7 @@ class SplashscreenPageState extends State<SplashscreenPage> {
         title: Text(widget.title),
       ),
       body: Column(
-        children: <Widget>[],
+        children: const <Widget>[],
       ),
     );
   }
