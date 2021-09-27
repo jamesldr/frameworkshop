@@ -3,7 +3,6 @@ class ProductModel {
   String? title;
   double? price;
   String? description;
-  String? category;
   String? image;
 
   ProductModel({
@@ -11,7 +10,6 @@ class ProductModel {
     this.title,
     this.price,
     this.description,
-    this.category,
     this.image,
   });
 
@@ -22,7 +20,6 @@ class ProductModel {
         ? json['price']
         : (json['price'] as int).toDouble();
     description = json['description'];
-    category = json['category'];
     image = json['image'];
   }
 
@@ -32,7 +29,6 @@ class ProductModel {
     data['title'] = title;
     data['price'] = price;
     data['description'] = description;
-    data['category'] = category;
     data['image'] = image;
     return data;
   }
