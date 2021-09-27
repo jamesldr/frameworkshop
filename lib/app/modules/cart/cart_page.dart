@@ -28,6 +28,12 @@ class CartPageState extends State<CartPage> {
   final formatCurrency = NumberFormat.simpleCurrency();
 
   @override
+  void initState() {
+    super.initState();
+    store.getTotalPrice();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Observer(builder: (_) {
@@ -106,6 +112,7 @@ class CartPageState extends State<CartPage> {
                         if (result) {
                           feedStore
                               .shoppingCartCompletelyRemoveItem(uniqueProduct);
+                          store.getTotalPrice();
                         }
                         return result;
                       },

@@ -10,7 +10,7 @@ import 'modules/login/login_module.dart';
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => Repository(Dio())),
+    Bind.lazySingleton((i) => Repository()),
   ];
 
   @override

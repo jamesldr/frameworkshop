@@ -1,5 +1,3 @@
-import 'package:frameworkshop/shared/models/ratings_model.dart';
-
 class ProductModel {
   int? id;
   String? title;
@@ -7,16 +5,15 @@ class ProductModel {
   String? description;
   String? category;
   String? image;
-  RatingsModel? rating;
 
-  ProductModel(
-      {this.id,
-      this.title,
-      this.price,
-      this.description,
-      this.category,
-      this.image,
-      required this.rating});
+  ProductModel({
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.image,
+  });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,8 +24,6 @@ class ProductModel {
     description = json['description'];
     category = json['category'];
     image = json['image'];
-    rating =
-        json['rating'] != null ? RatingsModel.fromJson(json['rating']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -39,9 +34,6 @@ class ProductModel {
     data['description'] = description;
     data['category'] = category;
     data['image'] = image;
-    if (rating != null) {
-      data['rating'] = rating?.toJson();
-    }
     return data;
   }
 }
